@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas de Gastos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0f0f13;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .chart-section {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            background: #1a1a22;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+
+        .chart-section h2 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: #aaa;
+        }
+
+        #main-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 280px;
+            gap: 12px;
+            padding: 10px 0;
+        }
+
+        .bar {
+            flex: 1;
+            max-width: 90px;
+            background: linear-gradient(180deg, #4f8cff, #2a5cff);
+            border-radius: 10px 10px 4px 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 8px 4px;
+            transition: height 0.4s ease;
+            position: relative;
+            min-height: 30px;
+        }
+
+        .bar span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .bar p {
+            font-size: 0.75rem;
+            color: #cce0ff;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        /* Datos de ejemplo */
+        .transactions {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #1a1a22;
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .transactions h2 {
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+            color: #aaa;
+        }
+
+        .tx-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #2a2a35;
+            font-size: 0.95rem;
+        }
+
+        .tx-item:last-child {
+            border-bottom: none;
+        }
+
+        .tx-amount {
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        .btn {
+            display: block;
+            margin: 20px auto 0;
+            padding: 12px 28px;
+            background: #4f8cff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: #3a7aef;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Estadísticas de Gastos</h1>
+
+    <div class="chart-section">
+        <h2>Distribución de gastos</h2>
+        <div id="main-chart">
+            <!-- Las barras se generan dinámicamente desde script.js -->
+        </div>
+    </div>
+
+    <div class="transactions">
+        <h2>Transacciones de ejemplo</h2>
+        <div id="tx-list"></div>
+        <button class="btn" onclick="updateCharts()">Actualizar gráfico</button>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Datos de ejemplo para que funcione de inmediato
+        // Puedes reemplazar esto por tu propia lógica de transacciones
+        let transactions = [
+            { type: 'expense', description: 'Supermercado', amount: 85 },
+            { type: 'expense', description: 'Cena con amigos', amount: 45 },
+            { type: 'expense', description: 'Uber al centro', amount: 18 },
+            { type: 'expense', description: 'Bus diario', amount: 12 },
+            { type: 'expense', description: 'Pago de luz', amount: 60 },
+            { type: 'expense', description: 'Alquiler casa', amount: 350 },
+            { type: 'expense', description: 'Cine', amount: 25 },
+            { type: 'expense', description: 'Comida rápida', amount: 22 }
+        ];
+
+        // Mostrar las transacciones
+        function renderTransactions() {
+            const list = document.getElementById('tx-list');
+            list.innerHTML = transactions
+                .filter(t => t.type === 'expense')
+                .map(t => `
+                    <div class="tx-item">
+                        <span>${t.description}</span>
+                        <span class="tx-amount">-$${t.amount}</span>
+                    </div>
+                `).join('');
+        }
+
+        // Inicializar
+        renderTransactions();
+        updateCharts();
+    </script>
+</body>
+          </html>
